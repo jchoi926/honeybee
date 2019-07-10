@@ -55,3 +55,36 @@ describe('helpers.once', function () {
     assert.equal(attempts, 1)
   })
 })
+
+describe('helpers.parseJSONError', function () {
+  const parseJSONError = (statusCode, body) => {
+    return util.parseJSONError({}, {statusCode, body: new Buffer.from(JSON.stringify(body))});
+  }
+
+  const assertEqual = (error, statusCode, message) => {
+    assert.equal(error.statusCode, statusCode)
+    assert.equal(error.message, message)
+    assert.equal(error.name, 'RequestError')
+  }
+
+  it('should return Bad Request', function () {
+    const statusCode = 400;
+    const body = {};
+    const error = parseJSONError(statusCode, body);
+    assertEqual(error, statusCode, 'Bad Request')
+  })
+
+  it('should return RequestError with message test msg', function () {
+    const statusCode = 400;
+    const body = {message: 'test msg'};
+    const error = parseJSONError(statusCode, body);
+    assertEqual(error, statusCode, body.message)
+  })
+
+  it('should return RequestError with message test err', function () {
+    const statusCode = 400;
+    const body = {error: 'test err'};
+    const error = parseJSONError(statusCode, body);
+    assertEqual(error, statusCode, body.error)
+  })
+})
