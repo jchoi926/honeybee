@@ -1,6 +1,6 @@
 {
   "name": "@cirrus-insight/honeybee",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "MIT",
   "repository": "cody-greene/honeybee",
   "engines": {"node": ">=4.4.0", "npm": "^3.0.0"},
